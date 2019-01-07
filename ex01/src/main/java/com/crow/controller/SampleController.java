@@ -108,6 +108,11 @@ public class SampleController {
 		return "/sample/ex04";
 	}
 	
+	@GetMapping
+	public void ex05() {
+		log.info("/ex05..........");
+	}
+	
 	
 
 }
