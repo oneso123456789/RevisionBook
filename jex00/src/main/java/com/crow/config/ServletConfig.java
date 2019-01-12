@@ -14,7 +14,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 @EnableWebMvc
-@ComponentScan(basePackages = { "org.zerock.controller" })
+@ComponentScan(basePackages = { "com.crow.controller", "com.crow.exception"})
 public class ServletConfig implements WebMvcConfigurer{
 	
 	@Override

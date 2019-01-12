@@ -35,6 +35,8 @@
 	
 	<context:component-scan base-package="com.crow.controller" />
 	
+	<context:component-scan base-package="com.crow.exception"/>
+	
 	
 	
 </beans:beans>
