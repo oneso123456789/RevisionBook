@@ -20,3 +20,9 @@ values (seq_board.nextval, '테스트 제목', '테스트 내용', 'user00');
 select * from tbl_board;
 
 commit
+
+select * from tbl_board order by  bno asc;
+
+select * from user_sequences;
+
+select seq_board.nextval from dual;
