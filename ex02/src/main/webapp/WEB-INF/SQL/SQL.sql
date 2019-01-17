@@ -10,6 +10,10 @@ create table tbl_board(
 	updatedate date default sysdate
 );
 
+drop table tbl_board purge;
+
+drop sequence seq_board;
+
 alter table tbl_board add constraint pk_board primary key(bno);
 
 select * from ALL_USERS;
