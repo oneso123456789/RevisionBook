@@ -1,5 +1,8 @@
 
-create sequence seq_board;
+create sequence seq_board
+start with 1
+increment by 1
+maxvalue 999999999;
 
 create table tbl_board(
 	bno number(10,0),
@@ -25,7 +28,9 @@ select * from tbl_board;
 
 commit
 
-select * from tbl_board order by  bno asc;
+select * from tbl_board order by  bno desc;
+
+select * from tbl_board where bno > 0 order by bno desc;
 
 select * from user_sequences;
 
