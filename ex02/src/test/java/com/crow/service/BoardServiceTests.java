@@ -62,5 +62,27 @@ public class BoardServiceTests {
 		
 		log.info(service.get(1L));
 	}
+	
+	@Test
+	public void testDelete() {
+		
+		//게시물 번호의 존재 여부를 확인하고 테스트 해야함. 2는 내가 방금 테스트로 삭제함
+		log.info("REMOVE RESULT: " + service.remove(2L));
+	}
+	
+	@Test
+	public void testUpdate() {
+		
+		BoardVO board = service.get(1L);
+		
+		if(board == null) {
+			return;
+		}
+		
+		board.setTitle("UPDATE TEST수정제목");
+		log.info("MODIFY RESULT: " + service.modify(board));
+	}
+	
+	
 
 }
