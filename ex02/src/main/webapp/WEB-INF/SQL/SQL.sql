@@ -35,3 +35,9 @@ select * from tbl_board where bno > 0 order by bno desc;
 select * from user_sequences;
 
 select seq_board.nextval from dual;
+
+select sequence_name, min_value, max_value, increment_by, last_number from user_sequences;
+
+select sequence_name, cache_size from user_sequences;
+
+alter sequence SEQ_BOARD nocache;
