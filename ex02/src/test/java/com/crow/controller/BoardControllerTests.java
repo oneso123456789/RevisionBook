@@ -73,5 +73,27 @@ public class BoardControllerTests {
 				.getModelAndView().getModelMap());
 	}
 	
+	@Test
+	public void testModify() throws Exception{
+		
+		String reultPage = mockMvc.perform(MockMvcRequestBuilders.post("/board/modify")
+				.param("bno", "1")
+				.param("title", "수정된 테스트 새글 제목")
+				.param("content", "수정된 테스트 새글 내용")
+				.param("writer", "crow"))
+			.andReturn().getModelAndView().getViewName();
+		
+		log.info(reultPage);
+	}
+	
+	@Test
+	public void testRemove() throws Exception{
+		//삭제전 데이터 베이스에 게시물 번호 확인할것 3번은 이거 코딩할때 테스트 해서 삭제할꺼임
+		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/board/remove")
+				.param("bno", "3")).andReturn().getModelAndView().getViewName();
+		
+		log.info(resultPage);
+	}
+	
 
 }
