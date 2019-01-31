@@ -29,7 +29,7 @@ select * from tbl_board;
 commit
 
 select * from tbl_board order by  bno desc;
-
+select * from tbl_board where bno > 0 order by bno asc
 select * from tbl_board where bno > 0 order by bno desc;
 
 select * from user_sequences;
