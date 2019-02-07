@@ -49,11 +49,15 @@
 					<button data-oper='list' class="btn btn-info">
 							<a href="/board/list">List</a></button> --%>
 							
-					<button data-oper='modify' class="btn btn-default" onclick='goModify()'>
+					<button data-oper='modify' class="btn btn-default" >
 							Modify</button>
 							
-					<button data-oper='list' class="btn btn-info" onclick='goList()'>
+					<button data-oper='list' class="btn btn-info" >
 							List</button>
+							
+					<form id='operForm' action="/board/modify" method="get">
+						<input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno}"/>'>
+					</form>
 					
 					
 			</div>
@@ -68,6 +72,10 @@
 	function goList(){
 		/*
 			만든이유: 파이어 폭스에서 그냥<button>태그에 onclick='/board/list'를 사용하면 안넘어감(파이어 폭스는 <button>을 기본적으로 submit으로 사용함)
+			2019-02-01
+			
+			 다른 방식으로 전환해서 필요없어 보임
+			2019-02-08
 		*/
 		window.location.href = "/board/list";
 
@@ -80,9 +88,31 @@
 			 다시 수정 처리를 한후에 제대로 확인해볼것
 			안될경우 다시 고민해서 처리할것
 			2019-02-01
+			
+			다른 방식으로 전환해서 필요없어 보임
+			2019-02-08
 		*/
 		
 		window.location.href = "/board/modify?bno=<c:out value='${board.bno}'/>";
 	}
+	
+	$(document).ready(function(){
+		
+		var operForm = $("#operForm");
+		
+		$("button[data-oper='modify']").on("click", function(e){
+			
+			operForm.attr("action","/board/modify").submit();
+			
+			
+		});
+		
+		$("button[data-oper='list']").on("click", function(e){
+			
+			operForm.find("#bno").remove();
+			operForm.attr("action","/board/list")
+			operForm.submit();
+		});
+	});
 	</script>
 <%@include file="../includes/footer.jsp"%>

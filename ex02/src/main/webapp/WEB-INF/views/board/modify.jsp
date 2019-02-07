@@ -60,14 +60,10 @@
 					<button data-oper='list' class="btn btn-info">
 							<a href="/board/list">List</a></button> --%>
 							
-					<button type="submit" data-oper='modify' class="btn btn-default" onclick='goModify()'>
-							Modify</button>
-					
+					<button type="submit" data-oper='modify' class="btn btn-default" >Modify</button>
 					<button type="submit" data-oper='remove' class="btn btn-danger">Remove</button>
-							
-					<button type="submit" data-oper='list' class="btn btn-info" onclick='goList()'>
-							List</button>
-					
+					<button type="submit" data-oper='list' class="btn btn-info" >List</button>
+
 			</form>		
 			</div>
 			<!-- end panel-body -->
@@ -76,7 +72,13 @@
 	</div>
 	<!-- /.row -->
 	
+
 	<script>
+	/*
+		firefox browser사용시 list로 안가짐
+		이 챕터 끝내고 해결할것
+		2019-02-08 
+	*/
 	$(document).ready(function(){
 		
 		var formObj = $("form");
@@ -93,9 +95,10 @@
 				formObj.attr("action", "/board/remove");
 			}else if(operation === 'list'){
 				//move to list
-				self.location= "/board/list";
-				return;
+				formObj.attr("action", "/board/list").attr("method","get");
+				formObj.empty();
 			}
+			
 			formObj.submit();
 			
 		});
