@@ -12,12 +12,14 @@ create table tbl_board(
 	regdate date default sysdate,
 	updatedate date default sysdate
 );
+alter table tbl_board add constraint pk_board primary key(bno);
+
 
 drop table tbl_board purge;
 
 drop sequence seq_board;
 
-alter table tbl_board add constraint pk_board primary key(bno);
+
 
 select * from ALL_USERS;
 
@@ -41,3 +43,12 @@ select sequence_name, min_value, max_value, increment_by, last_number from user_
 select sequence_name, cache_size from user_sequences;
 
 alter sequence SEQ_BOARD nocache;
+
+select
+	/*+ INDEX_DESC(tbl_board pk_board) */
+	*
+ from
+ 	tbl_board
+ 	where bno > 0;
+ 	
+ 	select * from user_constraints where table_name = 'tbl_board';

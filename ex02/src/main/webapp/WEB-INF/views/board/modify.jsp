@@ -95,8 +95,9 @@
 				formObj.attr("action", "/board/remove");
 			}else if(operation === 'list'){
 				//move to list
-				formObj.attr("action", "/board/list").attr("method","get");
-				formObj.empty();
+//				formObj.attr("action", "/board/list").attr("method","get");
+//				formObj.empty();
+				goModify();
 			}
 			
 			formObj.submit();
@@ -115,7 +116,7 @@
 	modify에서는 goList()와 goModify()가 필요가 없음
 	*/
 	
-/* 	function goList(){
+	function goList(){
 
 		window.location.href = "/board/list";
 
@@ -124,7 +125,7 @@
 	function goModify(){
 
 		window.location.href = "/board/modify?bno=<c:out value='${board.bno}'/>";
-	} */
+	}
 	
 	</script>
 <%@include file="../includes/footer.jsp"%>
