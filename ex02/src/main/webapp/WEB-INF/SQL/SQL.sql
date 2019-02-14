@@ -52,3 +52,13 @@ select
  	where bno > 0;
  	
  	select * from user_constraints where table_name = 'tbl_board';
+ 	
+ 	select * from tbl_board order by bno desc;
+ 	
+ 	select /*+INDEX_DESC (tbl_board pk_board) */*
+ 	from tbl_board;
+ 	
+ 	select /*+ FULL(tbl_board) */ * from tbl_board order by bno desc;
+ 	
+ 	select /*+ INDEX_ASC(tbl_board pk_board) */ * from tbl_board 
+ 	 where bno >0;
