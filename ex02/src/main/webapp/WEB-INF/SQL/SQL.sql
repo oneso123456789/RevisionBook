@@ -62,3 +62,57 @@ select
  	
  	select /*+ INDEX_ASC(tbl_board pk_board) */ * from tbl_board 
  	 where bno >0;
+ 	 
+ 	 select /*+ FULL(tbl_board) */
+ 	  rownum rn, bno, title
+ 	 from tbl_board where bno>0
+ 	 order by bno;
+ 	 
+ 	 select /*+ INDEX_ASC(tbl_board pk_board)  */
+ 	 	rownum rn , bno, title, content
+ 	 from tbl_board;
+ 	 
+ 	 select
+ 	 /*+ INDEX_DESC(tbl_board pk_board) */
+ 	 rownum rn, bno, title, content
+ 	 from tbl_board
+ 	 where bno > 0;
+ 	 
+ 	 select /*+ INDEX_DESC(tbl_board pk_board) */
+ 	 	rownum rn, bno, title, content
+ 	 from
+ 	 	tbl_board
+ 	 where rownum <= 10;
+ 	 
+ /* 아래의 SQL문은  사용이 불가함 */	 
+ 	 select /*+ INDEX_DESC(tbl_board pk_board) */
+ 	 	rownum rn, bno, title, content
+ 	 from
+ 	 	tbl_board
+ 	 where rownum > 10 and rownum <= 20;
+ 	 
+ 	-- ROWNUM은 반드시 1이 포함되도록 해야 한다. 
+ 	 select /*+ INDEX_DESC(tbl_board pk_board) */
+ 	 	rownum rn, bno, title, content
+ 	 from
+ 	 	tbl_board
+ 	 	where rownum <= 20;
+ 	 	
+ --    먼저 20개의 데이터를 가져오고 인라인뷰를 통해서 2페이지에 해당하는 10개만을 추출	 	
+ 	 	select
+ 	 		bno, title, content
+ 	 		from
+ 	 			(
+ 	 			select /*+ INDEX_DESC(tbl_board pk_board) */
+ 	 				rownum rn, bno, title, content
+ 	 			from
+ 	 				tbl_board
+ 	 			where rownum <= 20
+ 	 			)
+ 	 		where rn > 10;	
+ 	 		
+ 	 		select bno, title, content, writer, regdate, updatedate from ( select /*+ INDEX_DESC(tbl_board 
+pk_board) */ rownum rn, bno, title, content, writer, regdate, updatedate from tbl_board where 
+rownum <= 3 * 10 ) where rn > (3 -1) * 10 
+
+commit
