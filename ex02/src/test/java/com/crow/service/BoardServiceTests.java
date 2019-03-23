@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.crow.domain.BoardVO;
+import com.crow.domain.Criteria;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -47,15 +48,16 @@ public class BoardServiceTests {
 	@Test
 	public void testGetList() {
 		
-		service.getList().forEach(board -> log.info(board));
+	//	service.getList().forEach(board -> log.info(board));
+		service.getList(new Criteria(2, 10)).forEach(board -> log.info(board));
 	}
 	
 //	forEach로 board를 log.info(board)로 바꾸는 이유가 뭔지 모르겠음	
 //	두 콘솔 로그를 비교해보니 forEach를 사용해야지 로그가 중복으로 찍히는걸 방지할수있음?	
-	@Test
+/*	@Test
 	public void testGetList2() {
 		service.getList();
-	}
+	}*/
 	
 	@Test
 	public void testGet() {
@@ -82,6 +84,11 @@ public class BoardServiceTests {
 		board.setTitle("UPDATE TEST수정제목");
 		log.info("MODIFY RESULT: " + service.modify(board));
 	}
+	
+
+	
+	
+	
 	
 	
 

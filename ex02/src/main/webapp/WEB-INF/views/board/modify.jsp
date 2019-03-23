@@ -17,12 +17,16 @@
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 			
-				<div class="panel-heading">Board Modify</div>
+				<div class="panel-heading">Board Modify Page</div>
 			</div>
 			<!-- /.panel panel-default -->
 			<div class="panel-body">
 			
 			<form  role="form" action="/board/modify" method="post">
+					
+					<!-- 추가 -->
+					<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
+					<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
 					
 					<div class="form-group">
 						<label>Bno</label> <input class="form-control" name='bno'
@@ -60,9 +64,9 @@
 					<button data-oper='list' class="btn btn-info">
 							<a href="/board/list">List</a></button> --%>
 							
-					<button type="submit" data-oper='modify' class="btn btn-default" >Modify</button>
-					<button type="submit" data-oper='remove' class="btn btn-danger">Remove</button>
-					<button type="submit" data-oper='list' class="btn btn-info" >List</button>
+					<button type="button" data-oper='modify' class="btn btn-default" onclick="button(); return false;">Modify</button>
+					<button type="button" data-oper='remove' class="btn btn-danger" onclick="button(); return false;">Remove</button>
+					<button type="button" data-oper='list' class="btn btn-info" onclick="button(); return false;">List</button>
 
 			</form>		
 			</div>
@@ -79,7 +83,7 @@
 		이 챕터 끝내고 해결할것
 		2019-02-08 
 	*/
-	$(document).ready(function(){
+ 	$(document).ready(function(){
 		
 		var formObj = $("form");
 		
@@ -95,15 +99,53 @@
 				formObj.attr("action", "/board/remove");
 			}else if(operation === 'list'){
 				//move to list
-//				formObj.attr("action", "/board/list").attr("method","get");
-//				formObj.empty();
-				goModify();
+//		2019-03-12 이방식으로 firefox browser 사용시엔 리스트가 안넘어감
+				formObj.attr("action", "/board/list").attr("method","get");
+				var pageNumTag = $("input[name='pageNum']").clone();
+				var amountTag = $("input[name='amount']").clone();
+				
+				
+				formObj.empty();
+				formObj.append(pageNumTag);
+				formObj.append(amountTag);
+//				goModify();
+			}
+			
+			formObj.submit();
+			return false;
+		});
+	});
+	
+	/* function button(){
+		var formObj = $("form");
+		
+		$('button').on("click", function(e){
+			
+			
+			var operation = $(this).data("oper");
+			
+			console.log(operation);
+			
+			if(operation === 'remove'){
+				formObj.attr("action", "/board/remove");
+			}else if(operation === 'list'){
+				//move to list
+//		2019-03-12 이방식으로 firefox browser 사용시엔 리스트가 안넘어감
+				formObj.attr("action", "/board/list").attr("method","get");
+				var pageNumTag = $("input[name='pageNum']").clone();
+				var amountTag = $("input[name='amount']").clone();
+				
+				
+				formObj.empty();
+				formObj.append(pageNumTag);
+				formObj.append(amountTag);
+//				goModify();
 			}
 			
 			formObj.submit();
 			
 		});
-	});
+	} */
 	
 	/*
 	만든이유: 파이어 폭스에서 그냥<button>태그에 onclick='/board/list'를 사용하면 안넘어감(파이어 폭스는 <button>을 기본적으로 submit으로 사용함)
@@ -122,10 +164,15 @@
 
 	}
 	
-	function goModify(){
-
+/* 	function goModify(){
+		var formObj = $("form");
+		
+		formObj.empty();
+		formObj.append(pageNumTag);
+		formObj.append(amountTag);
+		
 		window.location.href = "/board/modify?bno=<c:out value='${board.bno}'/>";
-	}
+	} */
 	
 	</script>
 <%@include file="../includes/footer.jsp"%>

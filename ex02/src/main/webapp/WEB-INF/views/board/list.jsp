@@ -22,9 +22,15 @@
                             Board List Page
                             <button id='regBtn' type="button" class="btn btn-xs pull-right">Register New Board</button>
                         </div>
+                        
                         <!-- /.panel-heading -->
                         <div class="panel-body">
+                        <!-- 
+                        	이 태그에서 list.jsp페이지에  id="dataTables-example"를 이용해 예제를 불러와서 id부분을 제거함
+                        	부트스트랩 사용시 이 example 부분 제거할것
                             <table  class="table table-striped table-bordered table-hover" id="dataTables-example">
+                             -->
+                            <table  class="table table-striped table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>#번호</th>
@@ -38,14 +44,48 @@
                                 <c:forEach items="${list}" var="board">
                                 <tr>
                                 	<td><c:out value="${board.bno}" /></td>
-                                	<td><a href='/board/get?bno=<c:out value="${board.bno}"/>'>
-                                	<c:out value="${board.title}"/></a></td>
+                                	<%-- <td><a href='/board/get?bno=<c:out value="${board.bno}"/>'>
+                                	<c:out value="${board.title}"/></a></td> --%>
+                                	<td><a class='move' href='<c:out value="${board.bno}"/>'>  
+                                	       <c:out value="${board.title}" />                   	
+                                	</a></td>
                                 	<td><c:out value="${board.writer }" /></td>
                                 	<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate}" /></td>
                                 	<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.updatedate}" /></td>
                                 </tr>
                                 </c:forEach>
                             </table><!--  table태그의 끝 -->
+                            
+                             <div class='pull-right'>
+                            	<ul class="pagination">
+                            	
+                            		<c:if test="${pageMaker.prev}">
+                            			<li class="paginate_button previous"><a
+                            				 href="${pageMaker.startPage -1}">Previous</a></li>
+                            		</c:if>
+                            	
+                            		<c:forEach var="num" begin="${pageMaker.startPage}" 
+                            			end="${pageMaker.endPage}">
+                            			<li class="paginate_button	${pageMaker.cri.pageNum == num ? "active":""} ">
+                            				<a href="${num}">${num}</a>
+                            			</li>
+                            		</c:forEach>
+                            	
+                            		<c:if test="${pageMaker.next}">
+                            			<li class="paginate_button next">
+                            				<a href="${pageMaker.endPage +1 }">Next</a>
+                            			</li>
+                            		</c:if>
+                            	</ul>
+                            </div>
+                            <!-- end Pagination -->
+                            </div>
+                            
+                            <form id='actionForm' action="/board/list" method='get'>
+                            	<input type='hidden' name='pageNum' value = '${pageMaker.cri.pageNum}'>
+                            	<input type='hidden' name='amount' value = '${pageMaker.cri.amount}'>
+                            </form>
+                            
                             
                             <!--  Modal 추가 -->
                             <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -102,6 +142,40 @@
  		$("#regBtn").on("click", function(){
  			
  			self.location = "/board/register";
+ 			
+ 		});
+ 		
+ 		var actionForm = $("#actionForm");
+ 		
+/*  		
+ 	$(".paginate-button a").on("click", function(e){ 라고 적어서 계속 찾고있었음
+	 제발 오류 찾으면 일단 원본이랑 교제 견본이랑 비교사이트 가서 비교부터 할것
+	 -로 표시 거의 안함 _표시 기억할것
+	 
+ }
+ */
+ 		$(".paginate_button a").on("click", function(e){
+ 			
+ 			e.preventDefault();
+ 			
+ 			console.log('click');
+ 			
+ 			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+ 			actionForm.submit();
+ 		});
+ 
+ 		$(".move").on("click", function(e){
+/*
+			value='" 다음에 +꼭 포함하고 끝나고 닫을때도 + 꼭 포함해야함
+*/
+ 			e.preventDefault();
+			actionForm.append("<input type='hidden' name='bno' value='"
+ 								+ $(this).attr(
+ 										"href")
+ 								+ "'>");
+ 			actionForm.attr("action", "/board/get");
+ 			actionForm.submit();
+
  			
  		});
  		

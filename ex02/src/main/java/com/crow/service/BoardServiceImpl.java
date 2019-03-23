@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.crow.domain.BoardVO;
+import com.crow.domain.Criteria;
 import com.crow.mapper.BoardMapper;
 
 import lombok.AllArgsConstructor;
@@ -51,13 +52,31 @@ public class BoardServiceImpl implements BoardService{
 		return mapper.delete(bno) == 1;
 	}
 
-	@Override
+
+/*	@Override
 	public List<BoardVO> getList() {
 		// TODO Auto-generated method stub
 		
 		log.info("getList......");
 		
 		return mapper.getList();
+	}*/
+	
+	@Override
+	public List<BoardVO> getList(Criteria cri) {
+		// TODO Auto-generated method stub
+		
+		log.info("get List with criteria: " + cri);
+		
+		return mapper.getListWithPaging(cri);
+	}
+
+	@Override
+	public int getTotal(Criteria cri) {
+		// TODO Auto-generated method stub
+		
+		log.info("get total count");
+		return mapper.getTotalCount(cri);
 	}
 	
 	
